@@ -85,9 +85,13 @@ export class GooglePlaceDirective implements OnInit, OnChanges {
   constructor(private el: ElementRef, private service: GooglePlaceService, private ngZone: NgZone) {
 
   }
-  
+
   ngOnChanges(event: any) {
-    this.autocomplete = new google.maps.places.Autocomplete(this.el.nativeElement, event.options.currentValue);
+    if (event.options.previousValue && event.options.currentValue) {
+      if (event.options.currentValue.componentRestrictions.country !== event.options.previousValue.componentRestrictions.country) {
+        this.setAutocompleteAndInvokeEvent(event.options.currentValue);
+      }
+    }
   }
 
   ngOnInit() {
@@ -100,7 +104,11 @@ export class GooglePlaceDirective implements OnInit, OnChanges {
       return;
     }
 
-    this.autocomplete = new google.maps.places.Autocomplete(this.el.nativeElement, this.options);
+    this.setAutocompleteAndInvokeEvent(this.options);
+  }
+
+  setAutocompleteAndInvokeEvent(options: any) {
+    this.autocomplete = new google.maps.places.Autocomplete(this.el.nativeElement, options);
     this.trigger = this.autocomplete.addListener('place_changed', () => {
       this.ngZone.run(() => {
         this.place = this.autocomplete.getPlace();
