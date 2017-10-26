@@ -11,6 +11,10 @@ Thumbs.db
 # Ignored files
 *.ts
 !*.d.ts
+*.yml
+karma.conf.js
+protactor.conf.js
+yarn.lock
 
 # Custom Directories
 demo
