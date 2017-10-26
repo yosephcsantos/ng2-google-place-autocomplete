@@ -15,6 +15,7 @@ Thumbs.db
 karma.conf.js
 protactor.conf.js
 yarn.lock
+package.json
 
 # Custom Directories
 demo
